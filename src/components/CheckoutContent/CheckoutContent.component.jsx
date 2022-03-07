@@ -9,8 +9,10 @@ import {
 } from "./CheckoutContent.style";
 import ShippingInfoForm from "../ShippingInfoForm/ShippingInfoForm.component";
 import { IMG_BASE_URL } from "../../requests/api";
+import useAuth from "../../hooks/useAuth";
 const CheckoutContent = () => {
-  const { products } = useContext(UserContext);
+  // const { products } = useContext(UserContext);
+  const { products } = useAuth();
   const [cartProducts, setCartProducts] = products;
   console.log(cartProducts);
   return (

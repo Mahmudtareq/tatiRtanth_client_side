@@ -26,31 +26,17 @@ import CookiePolicy from "./pages/CookiePolicy.page";
 import Loading from "./components/Lodading/Loading.component";
 import NotFoundComponent from "./components/NotFound/NotFound.component";
 import OrderPlaced from "./pages/OrderPlaced.page";
-import useFirebase from "./hooks/useFirebase";
+// import useFirebase from "./hooks/useFirebase";
 import PhoneOtpVerification from "./components/SignIn/PhoneOtpVerification";
 import AuthProvider from "./components/Context/AuthProvider/AuthProvider";
 
-export const UserContext = createContext();
+// export const UserContext = createContext();
 
 function App() {
   const [theme, setTheme] = useState("light");
-  const [loggedInUser, setLoggedInUser] = useState({});
-  const [cartProducts, setCartProducts] = useState([]);
-  const [userOrder, setUserOrder] = useState({});
-  // const [allContext, setAllContext] = useFirebase({});
-  const allContext = useFirebase();
-  
-    
-  
-  // const AuthProvider = ({children}) => {
-  //   const allContext = useFirebase();
-  //   return {
-  //      <UserContext.Provide value = { allContext } >
-  //        {children}
-  //        </UserContext.Provide>
-  //   }
-   
-  // }
+  // const [loggedInUser, setLoggedInUser] = useState({});
+  // const [cartProducts, setCartProducts] = useState([]);
+  // const [userOrder, setUserOrder] = useState({});
 
   return (
     <>

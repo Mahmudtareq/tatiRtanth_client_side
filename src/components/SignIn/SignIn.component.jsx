@@ -1,23 +1,18 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
+import { Form, Alert } from "react-bootstrap";
+import { Button } from "react-bootstrap";
+import GoogleButton from "react-google-button";
 import { useForm } from "react-hook-form";
 import { useHistory, useLocation } from "react-router";
-import { UserContext } from "../../App";
-import initializeAuthentication from "../../Firebase/firebase.init";
 import useAuth from "../../hooks/useAuth";
 import { GET_USER_INFO_CALL, SIGNIN_CALL } from "../../requests/services";
 import { showNotification } from "../../utils/notifications";
-import PrimaryButton from "../Buttons/PrimaryButton.component";
 import ForgotPassword from "./ForgotPassword";
 import { SignInContainer, SignInFormContainer } from "./SignIn.style";
-import { GoogleAuthProvider, getAuth,signInWithPopup , RecaptchaVerifier} from "firebase/auth";
 import { Link } from "react-router-dom";
-import PhoneOtpVerification from "./PhoneOtpVerification";
-initializeAuthentication()
-const googleProvider = new GoogleAuthProvider();
-const auth = getAuth();
 
 const SignInContent = () => {
-  const { register, handleSubmit } = useForm();
+  // const { register, handleSubmit } = useForm();
   const history = useHistory();
   let location = useLocation();
   let { from } = location.state || { from: { pathname: "/" } };
@@ -69,31 +64,14 @@ const SignInContent = () => {
     setShowForgetPass(true);
   };
   const handleGoogleSignIn = () => {
-    // const auth = getAuth();
-    signInWithPopup(auth, googleProvider)
-      .then(result => {
-        const user = result.user;
-        setLoggedInUser(user)
-        // console.log(user);
-    }).catch((error) => {
-      console.log(error);
-            });
+    signInWithGoogle(history, location);
     
   }
   const handleFaceBookSignIn = () => {
     console.log('click facebook signIn');
     
-    
   }
 
-  // phone otp verification
-  const setUpRecaptcha = () => {
-    const recaptchaVerifier = new RecaptchaVerifier(
-      'recaptcha-container',
-      {},
-      auth);
-    recaptchaVerifier.rander()
-  }
 
   return (
     <>
@@ -101,11 +79,11 @@ const SignInContent = () => {
         <SignInFormContainer>
           {!showForgetPass && (
             <>
-              <h1>Login</h1>
-              <br />
-              <p>Please enter your email and password:</p>
+              {/* <h1 className="">Login</h1> */}
+              {/* <br />
+              <p>Please enter your email and password:</p> */}
               {/* <form onSubmit={handleSubmit(onSubmit)}> */}
-              <form >
+              {/* <form >
                 <div className="input__wrap">
                   <label htmlFor="phone">Phone</label>
                   <input
@@ -132,15 +110,15 @@ const SignInContent = () => {
                 <button type="submit">
                   <PrimaryButton>Login</PrimaryButton>
                 </button>
-              </form>
-              <p>
+              </form> */}
+              {/* <p>
                 Don't have an account ?
                 <span onClick={() => history.push("/sign-up")}>
                   {" "}
                   Create one
                 </span>
-              </p>
-              <div>
+              </p> */}
+              {/* <div>
               <button type="submit" onClick={ handleGoogleSignIn } className="">
               <PrimaryButton>Google Login</PrimaryButton>
               </button>
@@ -152,7 +130,45 @@ const SignInContent = () => {
                     <PrimaryButton>Phone Verification</PrimaryButton>
                 </Link>
                 
-              </div>
+              </div> */}
+              {/* start login button  */}
+               <div className="p-4 box">
+        <h2 className="mb-3">Firebase Auth Login</h2>
+        {error && <Alert variant="danger">{error}</Alert>}
+        <Form >
+        </Form>
+        <hr />
+        <div>
+          <GoogleButton
+            className="g-btn"
+            type="dark"
+            onClick={handleGoogleSignIn}
+          />
+                </div>
+            <div className="d-grid gap-2 mt-3">
+            <Button variant="secondary" type="Submit">
+              Sign in with facebook
+            </Button>
+          </div>
+               
+        <Link to="/phoneOtp">
+          <div className="d-grid gap-2 mt-3">
+            <Button variant="success" type="Submit">
+              Sign in with Phone
+            </Button>
+          </div>
+        </Link>
+      </div>
+      <div className="p-3 box mt-3 text-center">
+       <p>
+                Don't have an account ?
+          <span onClick={() => history.push("/sign-up")}>
+                  {" "}
+                  Create one
+                </span>
+              </p>
+      </div>
+              {/* End login button */}
               
             </>
           )}
@@ -162,7 +178,6 @@ const SignInContent = () => {
           )}
         </SignInFormContainer>
       </SignInContainer>
-        {setUpRecaptcha}
     </>
   
   );

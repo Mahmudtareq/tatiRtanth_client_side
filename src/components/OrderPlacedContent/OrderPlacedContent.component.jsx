@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext } from "react";
 import { useHistory } from "react-router";
 import { UserContext } from "../../App";
+import useAuth from "../../hooks/useAuth";
 import { IMG_BASE_URL } from "../../requests/api";
 import PrimaryButton from "../Buttons/PrimaryButton.component";
 import NotFound from "../NotFound/NotFound.component";
@@ -13,7 +14,8 @@ import { OrderPlacedContainer } from "./OrderPlacedContent.style";
 import OrderPlacedProducts from "./OrderPlacedProducts";
 
 function OrderPlacedContent() {
-  const { user, products, order } = useContext(UserContext);
+  // const { user, products, order } = useContext(UserContext);
+  const { user, products, order } = useAuth();
   const [cartProducts, setCartProducts] = products;
   const [userOrder, setUserOrder] = order;
   const history = useHistory();

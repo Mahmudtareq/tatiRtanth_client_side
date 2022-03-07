@@ -1,12 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
-import { UserContext } from "../../App";
+// import { UserContext } from "../../App";
+import useAuth from "../../hooks/useAuth";
 import { LOGOUT_CALL, USER_ORDER_HISTORY_CALL } from "../../requests/services";
 import PrimaryButton from "../Buttons/PrimaryButton.component";
 import { AccountContainer } from "./AccountContent.style";
 import OrderHistoryTable from "./OrderHistoryTable";
 
 function AccountContent() {
-  const { user, products } = useContext(UserContext);
+  // const { user, products } = useContext(UserContext);
+  const { user, products } = useAuth();
   const [loggedInUser, setLoggedInUser] = user;
   const [orderedHistory, setOrderedHistory] = useState([]);
 
@@ -43,8 +45,9 @@ function AccountContent() {
         <br />
         <h2>My Account</h2>
         <br />
-        <p>Welcome back, {loggedInUser.name} !</p>
+        <p>Welcome back, {loggedInUser.displayName } !</p>
         <br />
+        <p>Welcome back, {loggedInUser.email } !</p>
         <br />
         <div>
           <section>

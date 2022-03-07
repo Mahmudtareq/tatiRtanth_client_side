@@ -10,13 +10,12 @@ import { useClickOutside } from "../../utils/OutsideClickDetact";
 import CartProduct from "../CartProduct/CartProduct.component";
 import PrimaryButton from "../Buttons/PrimaryButton.component";
 import { useHistory } from "react-router";
-import { UserContext } from "../../App";
+// import { UserContext } from "../../App";
 import useAuth from "../../hooks/useAuth";
 
 const CartSidebar = ({ sidebarState }) => {
   // const { user, products } = useContext(UserContext);
   const { user, products } = useAuth();
-
   const [cartProducts, setCartProducts] = products;
   const [cartSidebarOpen, setCartSidebarState] = sidebarState;
   const history = useHistory();
