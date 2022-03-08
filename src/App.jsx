@@ -26,7 +26,6 @@ import CookiePolicy from "./pages/CookiePolicy.page";
 import Loading from "./components/Lodading/Loading.component";
 import NotFoundComponent from "./components/NotFound/NotFound.component";
 import OrderPlaced from "./pages/OrderPlaced.page";
-// import useFirebase from "./hooks/useFirebase";
 import PhoneOtpVerification from "./components/SignIn/PhoneOtpVerification";
 import AuthProvider from "./components/Context/AuthProvider/AuthProvider";
 
@@ -91,7 +90,6 @@ function App() {
                 />
                 <Route exact path="/test" component={Loading} />
                 <Route exact path="/cookie-policy" component={CookiePolicy} />
-
                 <Route exact path="*" component={NotFoundComponent} />
               </Switch>
               <Footer />

@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Form, Alert } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import GoogleButton from "react-google-button";
-import { useForm } from "react-hook-form";
-import { useHistory, useLocation } from "react-router";
+// import { useForm } from "react-hook-form";
+import { useHistory, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { GET_USER_INFO_CALL, SIGNIN_CALL } from "../../requests/services";
 import { showNotification } from "../../utils/notifications";
@@ -14,10 +14,10 @@ import { Link } from "react-router-dom";
 const SignInContent = () => {
   // const { register, handleSubmit } = useForm();
   const history = useHistory();
-  let location = useLocation();
-  let { from } = location.state || { from: { pathname: "/" } };
+  const location = useLocation();
+  // let { from } = location.state || { from: { pathname: "/" } };
   // const { user, products,signInWithGoogle } = useContext(UserContext);
-  const { user,signInWithGoogle ,products} = useAuth();
+  const { user,signInWithGoogle ,products, signInWithFacebook} = useAuth();
   const [loggedInUser, setLoggedInUser] = user;
   const [error, setError] = useState(null);
   const [showForgetPass, setShowForgetPass] = useState(false);
@@ -65,10 +65,13 @@ const SignInContent = () => {
   };
   const handleGoogleSignIn = () => {
     signInWithGoogle(history, location);
-    
+    showNotification("Logged in Successfully!");
+    // history.replace(from);
+       history.replace("/")
   }
   const handleFaceBookSignIn = () => {
-    console.log('click facebook signIn');
+    signInWithFacebook(history, location)
+    history.replace("/");
     
   }
 
@@ -146,7 +149,7 @@ const SignInContent = () => {
           />
                 </div>
             <div className="d-grid gap-2 mt-3">
-            <Button variant="secondary" type="Submit">
+            <Button onClick={handleFaceBookSignIn} variant="secondary" type="Submit">
               Sign in with facebook
             </Button>
           </div>

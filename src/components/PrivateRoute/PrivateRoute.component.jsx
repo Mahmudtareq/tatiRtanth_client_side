@@ -7,7 +7,7 @@ import useAuth from "../../hooks/useAuth";
 
 const PrivateRoute = ({ children, ...rest }) => {
   // const { user, products } = useContext(UserContext);
-  const { user ,context } = useAuth();
+  const { user,isLoading} = useAuth();
   const [loggedInUser, setLoggedInUser] = user;
   const [loading, setLoading] = useState(true);
 
@@ -36,7 +36,7 @@ const PrivateRoute = ({ children, ...rest }) => {
         <Route
           {...rest}
           render={({ location }) =>
-            loggedInUser.email ? (
+           loggedInUser.email ? (
               children
             ) : (
               <Redirect

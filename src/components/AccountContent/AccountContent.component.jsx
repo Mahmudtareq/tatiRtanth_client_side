@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-// import { UserContext } from "../../App";
+import { Button } from "react-bootstrap";
 import useAuth from "../../hooks/useAuth";
 import { LOGOUT_CALL, USER_ORDER_HISTORY_CALL } from "../../requests/services";
 import PrimaryButton from "../Buttons/PrimaryButton.component";
@@ -8,7 +8,7 @@ import OrderHistoryTable from "./OrderHistoryTable";
 
 function AccountContent() {
   // const { user, products } = useContext(UserContext);
-  const { user, products } = useAuth();
+  const { user, products , logOut} = useAuth();
   const [loggedInUser, setLoggedInUser] = user;
   const [orderedHistory, setOrderedHistory] = useState([]);
 
@@ -24,29 +24,27 @@ function AccountContent() {
     return () => {};
   }, [loggedInUser]);
 
-  const handleLogoutClick = () => {
-    console.log("clicked");
-    let token = JSON.parse(localStorage.getItem("token"));
-    if (token) {
-      LOGOUT_CALL(token)
-        .then((res) => {
-          console.log(res.data.message);
-          setLoggedInUser({});
-          localStorage.removeItem("token");
-        })
-        .catch((error) => console.log(error));
-    }
-  };
+  // const handleLogoutClick = () => {
+  //   console.log("clicked");
+  //   let token = JSON.parse(localStorage.getItem("token"));
+  //   if (token) {
+  //     LOGOUT_CALL(token)
+  //       .then((res) => {
+  //         console.log(res.data.message);
+  //         setLoggedInUser({});
+  //         localStorage.removeItem("token");
+  //       })
+  //       .catch((error) => console.log(error));
+  //   }
+  // };
   return (
     <>
       <AccountContainer>
-        <small onClick={() => handleLogoutClick()}>Logout</small>
+        <Button onClick={logOut} variant="primary">Logout</Button>
         <br />
         <br />
         <h2>My Account</h2>
-        <br />
         <p>Welcome back, {loggedInUser.displayName } !</p>
-        <br />
         <p>Welcome back, {loggedInUser.email } !</p>
         <br />
         <div>

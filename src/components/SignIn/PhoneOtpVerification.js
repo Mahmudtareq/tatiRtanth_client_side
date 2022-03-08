@@ -5,7 +5,7 @@ import PhoneInput from 'react-phone-number-input';
 import "./PhoneOtpVerification.css";
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
-// import { async } from '@firebase/util';
+import { async } from '@firebase/util';
 
 const PhoneOtpVerification = () => {
     const {setUpRecaptcha} = useAuth();
@@ -50,7 +50,7 @@ const PhoneOtpVerification = () => {
             await loggedInUser.confirm(otp).then((result) => {
                 const user = result.user;
                 console.log(user)
-               setLoggedInUser(user);
+                setLoggedInUser(user);
                 const destination = location?.state?.from || '/'
                 history.replace(destination);
                 // <Alert variant='success'>verification is done</Alert>
@@ -66,9 +66,9 @@ const PhoneOtpVerification = () => {
             <div className='p-4 box'>
                 <h2 className='mb-2'>Firebase Phone Auth</h2>
                 {error && <Alert variant='danger'>{error}</Alert>}
-                 <div style={{ display: !show ? "block" : "none" }}>
+                 <div style={{ display: !show ? "block" : "none" }} className="m-2">
                     <Form onSubmit={getOtp}>
-                    <Form.Group className="mb-3" controlId="formBasicPhoneNumber">
+                    <Form.Group className="mb-3 m-2" controlId="formBasicPhoneNumber">
                         <PhoneInput
                             defaultCountry='PH'
                             value={number}
@@ -82,7 +82,7 @@ const PhoneOtpVerification = () => {
                              <Button variant='secondary'>Cancel</Button> &nbsp;
                         </Link>
                        
-                        <Button variant='primary' type='submit'>Send OTP </Button>
+                        <Button variant='primary' type='submit'>Send OTP</Button>
 
                     </div>
                     </Form>
