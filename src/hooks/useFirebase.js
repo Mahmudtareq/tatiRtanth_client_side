@@ -1,4 +1,4 @@
-import React, { useState , useEffect} from 'react';
+import { useState , useEffect} from 'react';
 import { showNotification } from "../utils/notifications";
 import {
     GoogleAuthProvider, getAuth, onAuthStateChanged, signInWithPopup,
@@ -17,28 +17,36 @@ const useFirebase = () => {
     const facebookProvider = new FacebookAuthProvider();
     const auth = getAuth();
 
-    const signInWithGoogle = (location, history) => {
-            setIsLoading(true);
-            signInWithPopup(auth, googleProvider)
-            .then((result) => {
-                const user = result.user;
-                setError('');
-                setLoggedInUser(user);
-                // const destination = location?.state?.from || '/'
-                // history.push(destination);
-                // let destination = location.state || { from: { pathname: "/" } };
-                // history.replace(destination);
-                // const destination = location?.state?.from || '/'
-                // showNotification("Logged in Successfully!");
+    // const signInWithGoogle = (location, history) => {
+    //         setIsLoading(true);
+    //         signInWithPopup(auth, googleProvider)
+    //         .then((result) => {
+    //             const user = result.user;
+    //             setError('');
+    //             setLoggedInUser(user);
+    //             // const destination = location?.state?.from || '/'
+    //             // history.push(destination);
+    //             // let destination = location.state || { from: { pathname: "/" } };
+    //             // history.replace(destination);
+    //             // const destination = location?.state?.from || '/'
+    //             // showNotification("Logged in Successfully!");
               
     
-            }).catch((error) => {
-                setError(error.message);
-            });
+    //         }).catch((error) => {
+    //             setError(error.message);
+    //         });
 
-    }
+    // }
+
+    const signInWithGoogle = () => {
+       return  signInWithPopup(auth, googleProvider)
+ 
+  }
 
     // phone otp verification
+    
+    
+    
     const setUpRecaptcha = (number) => {
     const recaptchaVerifier = new RecaptchaVerifier(
       'recaptcha-container',
@@ -49,25 +57,16 @@ const useFirebase = () => {
     }
     // facebook login
     const signInWithFacebook = () => {
-        setIsLoading(true);
-        signInWithPopup(auth, facebookProvider);
-        signInWithRedirect(auth, facebookProvider)
-        .then((result) => {
-            const user = result.user;
-            setError('');
-            console.log(user);
-            })
-  .catch((error) => {
-      console.log(error.message);
-    
-  });
+        return signInWithPopup(auth, facebookProvider)
+        // signInWithRedirect(auth, facebookProvider)
         
 }
     // 
      useEffect(() => {
-       const unsubscribe= onAuthStateChanged(auth, (user) => {
-            if (user) {
-               setLoggedInUser(user);
+         const unsubscribe = onAuthStateChanged(auth, (loggedInUser) => {
+           console.log(loggedInUser)
+            if (loggedInUser) {
+               setLoggedInUser(loggedInUser);
             } else {
                setLoggedInUser({});
                
@@ -99,7 +98,8 @@ const useFirebase = () => {
         error,
         logOut,
         isLoading,
-        signInWithFacebook
+        signInWithFacebook,
+        setIsLoading
     }
 };
 

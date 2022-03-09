@@ -25,10 +25,13 @@ import Menubar from "../Menubar/Menubar.component";
 import useWindowDimensions from "../../utils/windowDimentions";
 // import { UserContext } from "../../App";
 import useAuth from "../../hooks/useAuth";
+import { Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   // const { user, products } = useContext(UserContext);
-  const { user, products } = useAuth();
+  const { user, products, logOut } = useAuth();
+  const [loggedInUser, setLoggedInUser] = user;
   const [cartProducts, setCartProducts] = products;
   const history = useHistory();
   const { pathname } = useLocation();
@@ -95,11 +98,24 @@ const Navbar = () => {
                   <div className="">{cartProducts.length} </div>
                 ) : null}
               </span>
-
-              <FontAwesomeIcon
+              {/* <Button variant="primary">
+                <span> <FontAwesomeIcon
                 icon={faUser}
                 onClick={() => history.push("/account")}
-              />
+              /></span>
+              </Button> */}
+              {loggedInUser?.email ?
+                <Link >
+                   <small
+                  onClick={() => history.push("/account")}
+                >{loggedInUser.displayName} </small>
+                </Link>
+                :
+                <Link to="/sign-in">
+                  <Button variant="outline-secondary">Login</Button>
+                </Link>
+            
+            }
             </NavbarIconsContainer>
 
             <NavItemsContainer>

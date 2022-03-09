@@ -52,8 +52,7 @@ const SignUpContent = () => {
       <SignInContainer>
         {!openOtp ? (
           <SignInFormContainer>
-            <h1>Register</h1>
-            <br />
+            <h1 className="mt-4">Register</h1>
             <p>Please fill in the information below:</p>
 
             <form onSubmit={handleSubmit(onSubmit)}>

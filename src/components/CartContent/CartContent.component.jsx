@@ -16,6 +16,7 @@ const CartContent = () => {
   
   // const { user, products } = useContext(UserContext);
   const { user, products } = useAuth();
+  const [loggedInUser, setLoggedInUser] = user;
   const [cartProducts, setCartProducts] = products;
   const history = useHistory();
 

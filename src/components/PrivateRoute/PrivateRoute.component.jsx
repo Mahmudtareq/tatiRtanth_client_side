@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {  useEffect, useState } from "react";
 import { Redirect, Route } from "react-router-dom";
-import { UserContext } from "../../App";
 import Loading from "../Lodading/Loading.component";
 import { GET_USER_INFO_CALL } from "../../requests/services";
 import useAuth from "../../hooks/useAuth";

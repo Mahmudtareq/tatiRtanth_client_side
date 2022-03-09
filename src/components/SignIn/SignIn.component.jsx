@@ -3,7 +3,7 @@ import { Form, Alert } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import GoogleButton from "react-google-button";
 // import { useForm } from "react-hook-form";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation ,Redirect} from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { GET_USER_INFO_CALL, SIGNIN_CALL } from "../../requests/services";
 import { showNotification } from "../../utils/notifications";
@@ -15,9 +15,8 @@ const SignInContent = () => {
   // const { register, handleSubmit } = useForm();
   const history = useHistory();
   const location = useLocation();
-  // let { from } = location.state || { from: { pathname: "/" } };
-  // const { user, products,signInWithGoogle } = useContext(UserContext);
-  const { user,signInWithGoogle ,products, signInWithFacebook} = useAuth();
+  const url= location.state?.from || "/"
+  const { user,signInWithGoogle ,products,setIsLoading, signInWithFacebook} = useAuth();
   const [loggedInUser, setLoggedInUser] = user;
   const [error, setError] = useState(null);
   const [showForgetPass, setShowForgetPass] = useState(false);
@@ -63,16 +62,37 @@ const SignInContent = () => {
   const handleForgotPassword = () => {
     setShowForgetPass(true);
   };
-  const handleGoogleSignIn = () => {
-    signInWithGoogle(history, location);
-    showNotification("Logged in Successfully!");
-    // history.replace(from);
-       history.replace("/")
+  const handleGoogleSignIn = (e) => {
+    e.preventDefault();
+    setIsLoading(true)
+    signInWithGoogle()
+      .then((res) => 
+        {
+          setLoggedInUser(res.user)
+          history.push(url)
+        }
+          )
+      .catch((err) => console.log(err))
+      .finally(() => {
+        setIsLoading(false)
+      })
+
   }
   const handleFaceBookSignIn = () => {
-    signInWithFacebook(history, location)
-    history.replace("/");
-    
+          signInWithFacebook()
+          // setIsLoading(true)
+    .then((result) => {
+            const user = result.user;
+             setLoggedInUser(user)
+             history.push(url)
+            })
+      .catch((error) => {
+            setError(error.message);
+      })
+            
+    .finally(() => {
+        setIsLoading(false)
+      })
   }
 
 
@@ -121,22 +141,10 @@ const SignInContent = () => {
                   Create one
                 </span>
               </p> */}
-              {/* <div>
-              <button type="submit" onClick={ handleGoogleSignIn } className="">
-              <PrimaryButton>Google Login</PrimaryButton>
-              </button>
-                
-              <button type="submit" onClick={handleFaceBookSignIn} className="">
-              <PrimaryButton>FaceBook Login</PrimaryButton>
-              </button>
-                <Link to="/phoneOtp">
-                    <PrimaryButton>Phone Verification</PrimaryButton>
-                </Link>
-                
-              </div> */}
+             
               {/* start login button  */}
-               <div className="p-4 box">
-        <h2 className="mb-3">Firebase Auth Login</h2>
+      <div className="p-4 box">
+        <h2 className="mb-3 text-center">Login With</h2>
         {error && <Alert variant="danger">{error}</Alert>}
         <Form >
         </Form>
@@ -147,7 +155,7 @@ const SignInContent = () => {
             type="dark"
             onClick={handleGoogleSignIn}
           />
-                </div>
+          </div>
             <div className="d-grid gap-2 mt-3">
             <Button onClick={handleFaceBookSignIn} variant="secondary" type="Submit">
               Sign in with facebook

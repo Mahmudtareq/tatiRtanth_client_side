@@ -66,7 +66,7 @@ const PhoneOtpVerification = () => {
             <div className='p-4 box'>
                 <h2 className='mb-2'>Firebase Phone Auth</h2>
                 {error && <Alert variant='danger'>{error}</Alert>}
-                 <div style={{ display: !show ? "block" : "none" }} className="m-2">
+                 <div style={{ display: !show ? "block" : "none" }} className="mt-3">
                     <Form onSubmit={getOtp}>
                     <Form.Group className="mb-3 m-2" controlId="formBasicPhoneNumber">
                         <PhoneInput
@@ -87,13 +87,13 @@ const PhoneOtpVerification = () => {
                     </div>
                     </Form>
                 </div>
-                <div style={{ display: show ? "block" : "none" }}>
+                <div className='' style={{ display: show ? "block" : "none" }}>
                   <Form onSubmit={verifyOtp}>
                     <Form.Group className="mb-3" controlId="formBasicOtp">
                         <Form.Control
                             type="otp"
-                            placeholder="Enter Otp"
-                           onChange={(e) => { setOtp(e.target.value) }}
+                             placeholder="Enter Otp"
+                             onChange={(e) => { setOtp(e.target.value) }}
                             >
                         </Form.Control>  
                     </Form.Group>
@@ -103,9 +103,7 @@ const PhoneOtpVerification = () => {
                     </Form>
                   </div>  
             </div>
-        
         </>
-        
     );
 };
 

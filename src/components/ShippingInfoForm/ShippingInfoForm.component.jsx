@@ -11,11 +11,10 @@ import {
 } from "./ShippingInfoForm.style";
 import { useTheme } from "styled-components";
 import { useHistory } from "react-router";
-// import { UserContext } from "../../App";
 import { useForm } from "react-hook-form";
 import { USER_ORDER } from "../../requests/services";
 import useAuth from "../../hooks/useAuth";
-
+import { Button } from "react-bootstrap";
 const ShippingInfoForm = () => {
   // const { user, products, order } = useContext(UserContext);
   const { user, products, order } = useAuth();
@@ -106,7 +105,7 @@ const ShippingInfoForm = () => {
 
         <br />
         <ShippingAddress onSubmit={handleSubmit(onSubmit)}>
-          <h1>Shipping Address</h1>
+          <h1 className="text-center fs-5">Shipping Address</h1>
           <br />
           <input
             type="text"
@@ -156,9 +155,26 @@ const ShippingInfoForm = () => {
             <option value="Payment">Payment</option>
           </select>
           <CheckoutPageButton type="submit">
-            Continue to shipping
+            <span onClick={() => history.push("/")}> Continue to Shipping</span>
           </CheckoutPageButton>{" "}
-          <small onClick={() => history.push("/cart")}>Return to cart</small>
+          <CheckoutPageButton type="submit">
+             <span onClick={() => history.push("/cart")}>Return to cart</span>
+          </CheckoutPageButton>
+          {/* <div>
+              <Button variant="secondary">
+                <span onClick={() => history.push("/")}> Continue to shipping</span>
+              </Button>{" "}
+   
+             <Button className="ms-2" variant="primary">
+                <span onClick={() => history.push("/cart")}>Return to cart</span>
+             </Button>
+
+          </div> */}
+        
+            
+    
+          
+         
         </ShippingAddress>
         <br />
         <hr />

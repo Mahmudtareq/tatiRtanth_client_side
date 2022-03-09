@@ -40,17 +40,20 @@ function AccountContent() {
   return (
     <>
       <AccountContainer>
-        <Button onClick={logOut} variant="primary">Logout</Button>
+        <Button onClick={logOut} className="px-4" variant="outline-secondary">Logout</Button>
         <br />
         <br />
-        <h2>My Account</h2>
-        <p>Welcome back, {loggedInUser.displayName } !</p>
-        <p>Welcome back, {loggedInUser.email } !</p>
+        <h1>My Account</h1>
+        <p>User Name : 
+          {loggedInUser.displayName} !</p>
+        <p>User Email : 
+          {loggedInUser.email} !</p>
+        <p>User Phone : 
+          {loggedInUser.phone} !</p>
         <br />
         <div>
           <section>
             <small>My orders</small>
-
             <hr />
             <br />
             {orderedHistory.length ? (
@@ -60,7 +63,7 @@ function AccountContent() {
             )}
           </section>
           <aside>
-            <small>Primary Address</small>
+            {/* <small>Primary Address</small> */}
             <hr />
             <br />
             <div>
